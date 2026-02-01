@@ -1,4 +1,4 @@
-package main
+package basics
 
 type myType int
 

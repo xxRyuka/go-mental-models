@@ -1,6 +1,8 @@
-﻿package main
+package basics
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // 1. GLOBAL SCOPE (Paket Seviyesi)
 // Burada ':=' KULLANAMAYIZ. Zorunlu olarak 'var' kullanıyoruz.
