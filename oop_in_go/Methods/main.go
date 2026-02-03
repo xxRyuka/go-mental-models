@@ -9,7 +9,6 @@ type Ogrenci struct {
 }
 
 func (o Ogrenci) OrtalamaHesapla() float64 {
-
 	return float64(o.Vize*1/3) + float64(o.Final)*2/3
 }
 
