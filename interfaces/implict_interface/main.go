@@ -1,7 +1,9 @@
 package main
 
 func main() {
-	notificationManager := NotificationManager{}
+	//Artık bu kullanılamaz çünkü panic: assignment to entry in nil map hatası alırız
+	//notificationManager := NotificationManager{} //
+	notificationManager := NewManager() // constuctor fonksiyonunu cagiriyoruz
 	emailSender1 := &EmailSender{
 		"sa", 50,
 	}
@@ -15,5 +17,9 @@ func main() {
 	notificationManager.AddProvider(smsSender1)
 
 	notificationManager.Broadcast("sirketi kapatiyoruz")
+
+	notificationManager.SendByProviderId(smsSender1.GetProvider(), "selam")
+
+	notificationManager.SendByProviderId("TEST OLMAYAN PROVİDER", "das")
 
 }
