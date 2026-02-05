@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
 	//Artık bu kullanılamaz çünkü panic: assignment to entry in nil map hatası alırız
 	//notificationManager := NotificationManager{} //
@@ -7,7 +9,7 @@ func main() {
 	emailSender1 := &EmailSender{
 		"sa", 50,
 	}
-	slackSender1 := SlackSender{Channel: "toplanti odası"}
+	slackSender1 := SlackSender{Channel: "toplanti odası", info: "bla bla bla"}
 	smsSender1 := SmsSender{PhoneNumber: "55555"}
 
 	notificationManager.AddProvider(FailingSender{})
@@ -22,4 +24,7 @@ func main() {
 
 	notificationManager.SendByProviderId("TEST OLMAYAN PROVİDER", "das")
 
+	x := notificationManager.Ping(slackSender1.GetProvider())
+
+	fmt.Printf("\n %+v \n", *x)
 }

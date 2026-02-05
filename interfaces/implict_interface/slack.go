@@ -4,6 +4,7 @@ import "fmt"
 
 type SlackSender struct {
 	Channel string
+	info    string
 }
 
 func (ss SlackSender) GetProvider() string {

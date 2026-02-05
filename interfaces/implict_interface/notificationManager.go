@@ -21,6 +21,14 @@ func NewManager() *NotificationManager { // managerin bellek adresteki yerini do
 	}
 }
 
+func (nm *NotificationManager) Ping(id string) *Notifier {
+	if prv, ok := nm.providerMap[id]; ok {
+		return &prv
+	} else {
+		return nil
+	}
+}
+
 func (nm *NotificationManager) AddProvider(prv Notifier) {
 	key := prv.GetProvider()
 	nm.providerMap[key] = prv
