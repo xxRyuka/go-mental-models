@@ -67,10 +67,26 @@ func main() {
 	hazirKahveler := make(chan Order)
 	var wg sync.WaitGroup
 
-	SiparisVer(siparisKanal, 12)
-	Kasiyer(siparisKanal, mutfakKuyruk)
-
+	go SiparisVer(siparisKanal, 12)
+	go Kasiyer(siparisKanal, mutfakKuyruk)
+	wg.Add(3)
 	go Barista(1, mutfakKuyruk, hazirKahveler, &wg)
 	go Barista(2, mutfakKuyruk, hazirKahveler, &wg)
 	go Barista(3, mutfakKuyruk, hazirKahveler, &wg)
+
+	// Önemli trick: Baristalar bittiğinde hazirKahveler kanalını bu goroutine kapatacak.
+	go func() {
+		wg.Wait()
+		fmt.Println("Tüm baristalar işini bitirdi. Hazır kahveler kanalı kapatılıyor.")
+		close(hazirKahveler)
+	}()
+
+	// Main: teslimat noktasını dinle
+	for ord := range hazirKahveler {
+		fmt.Printf("Teslim Edildi: Sipariş %d (%s) - Afiyet olsun! (Durum: %s)\n", ord.ID, ord.Name, ord.status)
+	}
+
+	fmt.Println("DÜKKAN KAPANDI. Tüm siparişler tamamlandı.")
 }
+
+//https://chatgpt.com/c/698dd600-c348-8326-bcf8-fb9589ce39db
